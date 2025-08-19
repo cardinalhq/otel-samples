@@ -84,7 +84,7 @@ public class Application {
                     .addLogRecordProcessor(
                         BatchLogRecordProcessor.builder(
                                 OtlpGrpcLogRecordExporter.builder()
-                                    .setEndpoint("http://localhost:4317")
+                                    .setEndpoint(System.getenv().getOrDefault("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317"))
                                     .build())
                             .build())
                     .build())
