@@ -8,10 +8,7 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.logs.SdkLoggerProvider;
 import io.opentelemetry.sdk.logs.export.BatchLogRecordProcessor;
 import io.opentelemetry.sdk.resources.Resource;
-import java.util.HashMap;
-import java.util.Map;
 import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.message.MapMessage;
 
 public class Application {
 
@@ -26,20 +23,7 @@ public class Application {
     io.opentelemetry.instrumentation.log4j.appender.v2_17.OpenTelemetryAppender.install(
         openTelemetry);
     
-    // Log using log4j API
-    logger.info("This is a simple info log message");
-    
-    Map<String, Object> mapMessage = new HashMap<>();
-    mapMessage.put("key", "value");
-    mapMessage.put("message", "This is a structured log message");
-    logger.info(new MapMessage<>(mapMessage));
-    
-    logger.error("This is an error log message with an exception", new Exception("error!"));
-    
-    // Continuous logging loop to keep the app running
-    logger.info("Starting continuous logging loop...");
     int messageCount = 1;
-    
     try {
       while (true) {
         // Log different types of messages
@@ -53,12 +37,6 @@ public class Application {
           logger.error("Error message #{} - Simulated error for testing", messageCount, 
               new RuntimeException("Simulated error #" + messageCount));
         }
-        
-        // Add some structured logging
-        Map<String, Object> periodicMap = new HashMap<>();
-        periodicMap.put("messageNumber", messageCount);
-        periodicMap.put("status", "running");
-        logger.info(new MapMessage<>(periodicMap));
         
         messageCount++;
         
